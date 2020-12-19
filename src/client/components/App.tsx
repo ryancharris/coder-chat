@@ -48,15 +48,18 @@ const useStyles = createUseStyles({
   // Apply some global style resets
   '@global': {
     body: {
-      margin: 0
+      margin: 0,
+      backgroundColor: '#BCECE0'
     }
   },
   // App-specific styles
   app: {
-    padding: 40,
-    textAlign: 'center',
+    alignItems: 'center',
     display: 'flex',
-    flexDirection: 'row'
+    height: '100vh',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    fontFamily: 'Helvetica'
   },
   title: {
     marginBottom: 20
