@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
-import api from '../lib/api';
+import React, { useState, useEffect } from 'react'
+import { createUseStyles } from 'react-jss'
+import api from '../lib/api'
+
+import JoinForm from './join/JoinForm'
 
 /**
  * The top-level component in our React application, all of the code currently
@@ -8,20 +10,21 @@ import api from '../lib/api';
  * should ultimately be replaced with the final chat app.
  */
 export const App: React.FC = () => {
-  const styles = useStyles();
+  const styles = useStyles()
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
 
   // Make a test request immediately on component render to the API, and set
   // component state based on the response
   useEffect(() => {
-    api.test()
+    api
+      .test()
       .then(() => setSuccess(true))
       .catch(err => setError(err))
   }, [])
 
   // Set content message based on the current state of the App
-  let content;
+  let content
   if (success) {
     content = <pre>Got a response from the server!</pre>
   } else if (error) {
@@ -32,39 +35,35 @@ export const App: React.FC = () => {
 
   return (
     <div className={styles.app}>
-      <h1 className={styles.title}>Hello!</h1>
-      <p className={styles.text}>
-        Check out <code>README.md</code> for instructions on what to build,
-        and <code>src/client/App.tsx</code> to see the code that renders this.
-        Good luck!
-      </p>
-      {content}
+      <JoinForm></JoinForm>
+      {/* {content} */}
     </div>
   )
 }
-
 
 // This JSS function creates a hook that the above component can use, providing
 // it with conflict-avoidant class names that provide the styles.
 // You can read more about it here: https://cssinjs.org/react-jss
 const useStyles = createUseStyles({
   // Apply some global style resets
-  "@global": {
+  '@global': {
     body: {
-      margin: 0,
-    },
+      margin: 0
+    }
   },
   // App-specific styles
   app: {
     padding: 40,
     textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'row'
   },
   title: {
-    marginBottom: 20,
+    marginBottom: 20
   },
   text: {
     '& code': {
-      color: '#8e44ad',
-    },
-  },
+      color: '#8e44ad'
+    }
+  }
 })

@@ -1,8 +1,8 @@
 import React from 'react'
-import { createUseStyles } from "react-jss";
+import { createUseStyles } from 'react-jss'
 
 function JoinForm() {
-  const styles = useStyles();
+  const styles = useStyles()
   return (
     <div className={styles.joinForm}>
       <h1>Welcome to Coder Chat</h1>
@@ -25,6 +25,6 @@ export default JoinForm
 const useStyles = createUseStyles({
   joinForm: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column'
   }
 })
