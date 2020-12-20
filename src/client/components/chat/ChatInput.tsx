@@ -5,7 +5,7 @@ import api from '../../lib/api'
 import { Message } from '../../../types/message'
 
 type ChatInputProps = {
-  username: string
+  username: string | null
 }
 
 function ChatInput(props: ChatInputProps) {
@@ -25,13 +25,13 @@ function ChatInput(props: ChatInputProps) {
       })
       .then(res => {
         // TODO: Add success messaging
-        console.log('message sent')
-        console.log(res)
+        // console.log('message sent')
+        // console.log(res)
       })
       .catch(err => {
         // TODO: Add failure messaging
-        console.log('message failed to send')
-        console.log(err)
+        // console.log('message failed to send')
+        // console.log(err)
       })
   }
 
