@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
-import api from '../lib/api'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
+import api from '../lib/api'
 import Chat from './chat/Chat'
 import JoinForm from './join/JoinForm'
 
@@ -69,6 +71,7 @@ export const App: React.FC = () => {
       {serverState === ServerStates.AVAILABLE && !username && (
         <JoinForm setUsername={setUsername} />
       )}
+      <ToastContainer />
     </div>
   )
 }
