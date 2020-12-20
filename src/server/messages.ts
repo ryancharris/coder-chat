@@ -1,22 +1,22 @@
-import { EventEmitter } from 'events';
-import { Message, MessageArgs } from '../types/message';
+import { EventEmitter } from 'events'
+import { Message, MessageArgs } from '../types/message'
 
 class Messages extends EventEmitter {
-  protected messages: Message[] = [];
+  protected messages: Message[] = []
 
   addMessage(messageArgs: MessageArgs) {
     const newMessage = {
       ...messageArgs,
       time: Date.now()
     }
-    this.messages.push(newMessage);
-    this.emit('message', newMessage);
-    return newMessage;
+    this.messages.push(newMessage)
+    this.emit('message', newMessage)
+    return newMessage
   }
 
   getMessages() {
-    return [...this.messages];
+    return [...this.messages]
   }
 }
 
-export default new Messages();
+export default new Messages()

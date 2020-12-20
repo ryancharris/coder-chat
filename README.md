@@ -38,7 +38,7 @@ of how we write code, and assess your ability to adapt and conform to new stacks
   write your javascript a little differently by typing your variables and
   functions. All JavaScript at Coder is compiled via TypeScript.
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html) - We prefer functional
-components with hooks, resorting only to class components for very specific scenarios.
+  components with hooks, resorting only to class components for very specific scenarios.
 - [JSS Styling](https://cssinjs.org/) - We have switched from Sass styling to
   using JSS, which is somewhat similar to other CSS-in-JS solutions, but shares
   a lot more in its structure with Sass.

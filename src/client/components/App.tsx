@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { createUseStyles } from 'react-jss';
-import api from '../lib/api';
+import React, { useState, useEffect } from 'react'
+import { createUseStyles } from 'react-jss'
+import api from '../lib/api'
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Chat from './chat/Chat'
+import JoinForm from './join/JoinForm'
 
 /**
  * The top-level component in our React application, all of the code currently
@@ -8,56 +13,65 @@ import api from '../lib/api';
  * should ultimately be replaced with the final chat app.
  */
 export const App: React.FC = () => {
-  const styles = useStyles();
+  const styles = useStyles()
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
 
   // Make a test request immediately on component render to the API, and set
   // component state based on the response
   useEffect(() => {
-    api.test()
+    api
+      .test()
       .then(() => setSuccess(true))
       .catch(err => setError(err))
   }, [])
 
   // Set content message based on the current state of the App
-  let content;
-  if (success) {
-    content = <pre>Got a response from the server!</pre>
-  } else if (error) {
-    content = <pre className="error">{error.toString()}</pre>
-  } else {
-    content = <p>Sending test request to API...</p>
-  }
+  /* let content
+   * if (success) {
+   *   content = <pre>Got a response from the server!</pre>
+   * } else if (error) {
+   *   content = <pre className="error">{error.toString()}</pre>
+   * } else {
+   *   content = <p>Sending test request to API...</p>
+   * } */
 
   return (
+    // <Router>
     <div className={styles.app}>
-      <h1 className={styles.title}>Hello!</h1>
-      <p className={styles.text}>
-        Check out <code>README.md</code> for instructions on what to build,
-        and <code>src/client/App.tsx</code> to see the code that renders this.
-        Good luck!
-      </p>
-      {content}
+      <Switch>
+        <Route path="/chat">
+          <Chat username={username} />
+        </Route>
+        <Route exact path="/">
+          <JoinForm setUsername={setUsername} />
+        </Route>
+      </Switch>
     </div>
+    // </Router>
   )
 }
-
 
 // This JSS function creates a hook that the above component can use, providing
 // it with conflict-avoidant class names that provide the styles.
 // You can read more about it here: https://cssinjs.org/react-jss
 const useStyles = createUseStyles({
   // Apply some global style resets
-  "@global": {
+  '@global': {
     body: {
       margin: 0,
+      backgroundColor: '#BCECE0',
     },
   },
   // App-specific styles
   app: {
-    padding: 40,
-    textAlign: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    height: '100vh',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    fontFamily: 'Helvetica',
   },
   title: {
     marginBottom: 20,
