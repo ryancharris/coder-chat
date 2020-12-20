@@ -7,7 +7,7 @@ const build = path.join(__dirname, 'dist/client')
 // Shared configs
 const tsLoader = {
   test: /\.tsx?$/,
-  loader: ['babel-loader']
+  loader: ['babel-loader'],
 }
 
 // Client config
@@ -19,23 +19,29 @@ module.exports = {
   entry: path.join(src, 'index.tsx'),
   output: {
     path: build,
-    filename: 'script.js'
+    filename: 'script.js',
   },
   module: {
-    rules: [tsLoader]
+    rules: [
+      tsLoader,
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css'],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(src, 'index.html'),
-      inject: true
-    })
+      inject: true,
+    }),
   ],
   devServer: {
     hot: true,
     open: true,
-    stats: 'errors-only'
-  }
+    stats: 'errors-only',
+  },
 }

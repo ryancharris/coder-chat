@@ -16,8 +16,8 @@ app.use(cors())
 /******************** Routes ********************/
 
 app.get('/test', (req, res) => {
-  res.json({
-    data: { success: true }
+  res.status(200).json({
+    data: { success: true },
   })
 })
 
@@ -30,17 +30,21 @@ app.post('/message', (req, res) => {
     if (!req.body.body) {
       throw new Error('Messages require a "body" argument')
     }
-    if (req.body.body.length > 1000) {
-      throw new Error('Message body cannot be more than 1000 characters')
+
+    // We enforce max message length on the client-side, however,
+    // we need to do it here as well to prevent malicious requests.
+    if (req.body.body.length > 200) {
+      throw new Error('Message body cannot be more than 200 characters')
     }
 
     // Add the post and send it back to them
     const message = MessagesManager.addMessage(req.body)
     res.json({
-      data: { message }
+      data: { message },
     })
   } catch (err) {
-    res.json({ error: err.message })
+    // Send a 500 response back to the client
+    res.status(500).json({ error: err.message })
   }
 })
 

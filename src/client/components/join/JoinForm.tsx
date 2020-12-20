@@ -1,14 +1,27 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import { toast } from 'react-toastify'
+
+import { NotificationPermisionStatus } from '../App'
 
 type JoinFormProps = {
   setUsername: Function
+  notificationPermission: NotificationPermisionStatus
+}
+
+function usernameIsValid(str: string): boolean {
+  if (str === null || str.length < 3 || str.length > 20) {
+    return false
+  }
+
+  return true
 }
 
 function JoinForm(props: JoinFormProps): JSX.Element {
-  const { setUsername } = props
+  const { notificationPermission, setUsername } = props
   const styles = useStyles()
-  const inputRef = useRef(null)
+  const [name, setName] = useState<string>('')
+  const validUserName = usernameIsValid(name)
 
   return (
     <div className={styles.joinForm}>
@@ -16,19 +29,38 @@ function JoinForm(props: JoinFormProps): JSX.Element {
       <form className={styles.joinFormForm}>
         <input
           autoFocus
-          ref={inputRef}
           className={styles.joinFormInput}
           required
           placeholder="Enter your name"
           type="text"
+          onChange={e => setName(e.currentTarget.value)}
         />
         <button
           className={styles.joinFormButton}
           type="submit"
-          onClick={() => {
-            if (inputRef.current) {
-              // TODO: Fix typing
-              setUsername(inputRef.current.value)
+          onClick={e => {
+            e.preventDefault()
+
+            if (validUserName) {
+              setUsername(name)
+
+              if (notificationPermission !== 'granted') {
+                toast.success(`Logged in as ${name}`, {
+                  autoClose: 3000,
+                })
+              } else {
+                new Notification(`Logged in as ${name}`)
+              }
+            } else {
+              if (notificationPermission !== 'granted') {
+                toast.error(
+                  'Usernames must be between 3 and 20 alphanumeric characters'
+                )
+              } else {
+                new Notification(
+                  'Usernames must be between 3 and 20 alphanumeric characters'
+                )
+              }
             }
           }}
         >

@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import { toast } from 'react-toastify'
 
 import api from '../../lib/api'
-import { Message } from '../../../types/message'
+import { MessageArgs } from '../../../types/message'
+
+import { NotificationPermisionStatus } from '../App'
 
 type ChatInputProps = {
   username: string | null
+  notificationPermission: NotificationPermisionStatus
 }
 
 function ChatInput(props: ChatInputProps) {
-  const { username } = props
+  const { notificationPermission, username } = props
   const styles = useStyles()
   const [message, setMessage] = useState('')
 
@@ -20,16 +24,20 @@ function ChatInput(props: ChatInputProps) {
       .postMessage({
         from: username,
         body: message,
-      })
+      } as MessageArgs)
       .then(res => {
-        // TODO: Add success messaging
-        // console.log('message sent')
-        // console.log(res)
+        if (notificationPermission !== 'granted') {
+          toast.success('Message sent 🚀')
+        } else {
+          new Notification('Message sent 🚀')
+        }
       })
       .catch(err => {
-        // TODO: Add failure messaging
-        // console.log('message failed to send')
-        // console.log(err)
+        if (notificationPermission !== 'granted') {
+          toast.error('Message failed 😢')
+        } else {
+          new Notification('Message failed 😢')
+        }
       })
   }
 
