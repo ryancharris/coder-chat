@@ -4,12 +4,15 @@ import { createUseStyles } from 'react-jss'
 import api from '../../lib/api'
 import { Message, MessageArgs } from '../../../types/message'
 
+import { NotificationPermisionStatus } from '../App'
+
 type ChatInputProps = {
   username: string | null
+  notificationPermission: NotificationPermisionStatus
 }
 
 function ChatInput(props: ChatInputProps) {
-  const { username } = props
+  const { notificationPermission, username } = props
   const styles = useStyles()
   const [message, setMessage] = useState('')
 
@@ -22,14 +25,20 @@ function ChatInput(props: ChatInputProps) {
         body: message,
       } as MessageArgs)
       .then(res => {
-        // TODO: Add success messaging
-        // console.log('message sent')
-        // console.log(res)
+        if (notificationPermission !== 'granted') {
+          // TODO: Add success messaging
+          console.log('Message sent')
+        } else {
+          new Notification('Message sent 🚀')
+        }
       })
       .catch(err => {
-        // TODO: Add failure messaging
-        // console.log('message failed to send')
-        // console.log(err)
+        if (notificationPermission !== 'granted') {
+          // TODO: Add failure messaging
+          console.log('Message failed')
+        } else {
+          new Notification('Message failed 😢')
+        }
       })
   }
 

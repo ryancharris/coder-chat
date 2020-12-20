@@ -10,11 +10,17 @@ enum ServerStates {
   UNAVAILABLE = 'unavailable',
 }
 
+export type NotificationPermisionStatus = 'granted' | 'denied' | 'default'
+
 export const App: React.FC = () => {
   const styles = useStyles()
   const [error, setError] = useState<Error | null>(null)
   const [username, setUsername] = useState<string | null>(null)
   const [serverState, setServerState] = useState<ServerStates | null>(null)
+  const [
+    notificationPermission,
+    setNotificationPermission,
+  ] = useState<NotificationPermisionStatus>('default')
 
   useEffect(() => {
     api
@@ -26,6 +32,26 @@ export const App: React.FC = () => {
       })
   }, [])
 
+  useEffect(() => {
+    if (!('Notification' in window) || Notification.permission === 'denied') {
+      setNotificationPermission('denied')
+    }
+
+    if (Notification.permission === 'granted') {
+      setNotificationPermission('granted')
+    }
+
+    if (Notification.permission === 'default') {
+      Notification.requestPermission()
+        .then(permission => {
+          setNotificationPermission(permission)
+        })
+        .catch(err => {
+          setNotificationPermission('denied')
+        })
+    }
+  })
+
   return (
     <div className={styles.app}>
       {serverState === ServerStates.UNAVAILABLE && (
@@ -35,7 +61,10 @@ export const App: React.FC = () => {
         </div>
       )}
       {serverState === ServerStates.AVAILABLE && username && (
-        <Chat username={username} />
+        <Chat
+          username={username}
+          notificationPermission={notificationPermission}
+        />
       )}
       {serverState === ServerStates.AVAILABLE && !username && (
         <JoinForm setUsername={setUsername} />

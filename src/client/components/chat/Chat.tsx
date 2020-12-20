@@ -4,12 +4,15 @@ import { createUseStyles } from 'react-jss'
 import ChatLog from './ChatLog'
 import ChatInput from './ChatInput'
 
+import { NotificationPermisionStatus } from '../../components/App'
+
 type ChatProps = {
   username: string | null
+  notificationPermission: NotificationPermisionStatus
 }
 
 function Chat(props: ChatProps) {
-  const { username } = props
+  const { notificationPermission, username } = props
   const styles = useStyles()
 
   return (
@@ -18,7 +21,10 @@ function Chat(props: ChatProps) {
         <ChatLog username={username} />
       </div>
       <div className={styles.chatInputWrapper}>
-        <ChatInput username={username} />
+        <ChatInput
+          username={username}
+          notificationPermission={notificationPermission}
+        />
       </div>
     </div>
   )

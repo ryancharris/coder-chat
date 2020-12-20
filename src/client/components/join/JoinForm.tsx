@@ -1,8 +1,16 @@
-import React, { useRef } from 'react'
+import React, { isValidElement, useRef } from 'react'
 import { createUseStyles } from 'react-jss'
 
 type JoinFormProps = {
   setUsername: Function
+}
+
+function usernameIsValid(str: string): boolean {
+  if (str.length < 3 || str.length > 20) {
+    return false
+  }
+
+  return true
 }
 
 function JoinForm(props: JoinFormProps): JSX.Element {
@@ -26,7 +34,10 @@ function JoinForm(props: JoinFormProps): JSX.Element {
           className={styles.joinFormButton}
           type="submit"
           onClick={() => {
-            if (inputRef.current) {
+            const validUsername =
+              inputRef.current && usernameIsValid(inputRef.current.value)
+
+            if (validUsername) {
               // TODO: Fix typing
               setUsername(inputRef.current.value)
             }
