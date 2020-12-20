@@ -26,16 +26,6 @@ export const App: React.FC = () => {
       })
   }, [])
 
-  // Set content message based on the current state of the App
-  /* let content
-   * if (success) {
-   *   content = <pre>Got a response from the server!</pre>
-   * } else if (error) {
-   *   content = <pre className="error">{error.toString()}</pre>
-   * } else {
-   *   content = <p>Sending test request to API...</p>
-   * } */
-
   return (
     <div className={styles.app}>
       {serverState === ServerStates.UNAVAILABLE && (
