@@ -1,15 +1,50 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { createUseStyles } from 'react-jss'
 
-function ChatInput() {
+import api from '../../lib/api'
+import { Message } from '../../../types/message'
+
+type ChatInputProps = {
+  username: string
+}
+
+function ChatInput(props: ChatInputProps) {
+  const { username } = props
   const styles = useStyles()
+  const textRef = useRef(null)
+
+  const sendMessage = () => {
+    if (!textRef.current) {
+      return
+    }
+
+    api
+      .postMessage({
+        from: username,
+        body: textRef.current.value,
+      })
+      .then(res => {
+        // TODO: Add success messaging
+        console.log('message sent')
+        console.log(res)
+      })
+      .catch(err => {
+        // TODO: Add failure messaging
+        console.log('message failed to send')
+        console.log(err)
+      })
+  }
+
   return (
     <div className={styles.chatInput}>
       <textarea
+        ref={textRef}
         className={styles.chatInputText}
         placeholder="Enter a message"
       ></textarea>
-      <button className={styles.chatInputButton}>Send</button>
+      <button className={styles.chatInputButton} onClick={sendMessage}>
+        Send
+      </button>
     </div>
   )
 }
