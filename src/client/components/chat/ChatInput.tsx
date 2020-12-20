@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import api from '../../lib/api'
@@ -11,17 +11,15 @@ type ChatInputProps = {
 function ChatInput(props: ChatInputProps) {
   const { username } = props
   const styles = useStyles()
-  const textRef = useRef(null)
+  const [message, setMessage] = useState('')
 
   const sendMessage = () => {
-    if (!textRef.current) {
-      return
-    }
+    setMessage('')
 
     api
       .postMessage({
         from: username,
-        body: textRef.current.value,
+        body: message,
       })
       .then(res => {
         // TODO: Add success messaging
@@ -38,9 +36,10 @@ function ChatInput(props: ChatInputProps) {
   return (
     <div className={styles.chatInput}>
       <textarea
-        ref={textRef}
+        value={message}
         className={styles.chatInputText}
         placeholder="Enter a message"
+        onChange={e => setMessage(e.currentTarget.value)}
       ></textarea>
       <button className={styles.chatInputButton} onClick={sendMessage}>
         Send
