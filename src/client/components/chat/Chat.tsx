@@ -15,7 +15,7 @@ function Chat(props: ChatProps) {
   return (
     <div className={styles.chat}>
       <div className={styles.chatLogWrapper}>
-        <ChatLog />
+        <ChatLog username={username} />
       </div>
       <div className={styles.chatInputWrapper}>
         <ChatInput username={username} />

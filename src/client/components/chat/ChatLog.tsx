@@ -2,9 +2,19 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import api from '../../lib/api'
+import GuestMessage from './GuestMessage'
+import UserMessage from './UserMessage'
 
-function ChatLog() {
+import { Message } from '../../../types/message'
+
+type ChatLogProps = {
+  username: string | null
+}
+
+function ChatLog(props: ChatLogProps) {
+  const { username } = props
   const styles = useStyles()
+  const anchorRef = useRef(null)
   const messagesRef = useRef([])
   const [messages, setMessages] = useState([])
 
@@ -22,6 +32,7 @@ function ChatLog() {
       if (json.type === 'message') {
         messagesRef.current = [...messagesRef.current, json.data]
         setMessages([...messagesRef.current, json])
+        anchorRef.current.scrollIntoView({ behavior: 'smooth' })
       }
     }
 
@@ -38,9 +49,24 @@ function ChatLog() {
   return (
     <div className={styles.chatLog}>
       <div className={styles.logWrapper}>
-        {messagesRef.current.map((msg, idx) => {
-          return <p key={`${msg.from}-${idx}`}>{msg.body}</p>
+        {messagesRef.current.map((msg: Message, idx: number) => {
+          return msg.from === username ? (
+            <UserMessage
+              key={`${idx}-${msg.from}`}
+              body={msg.body}
+              from={msg.from}
+              time={msg.time}
+            />
+          ) : (
+            <GuestMessage
+              key={`${idx}-${msg.from}`}
+              body={msg.body}
+              from={msg.from}
+              time={msg.time}
+            />
+          )
         })}
+        <div ref={anchorRef} className={styles.anchor}></div>
       </div>
     </div>
   )
@@ -58,6 +84,10 @@ const useStyles = createUseStyles({
     backgroundColor: 'white',
     borderRadius: '4px',
     height: '100%',
+    overflowY: 'scroll',
     padding: '12px',
+  },
+  anchor: {
+    height: 0,
   },
 })
