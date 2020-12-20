@@ -69,7 +69,10 @@ export const App: React.FC = () => {
         />
       )}
       {serverState === ServerStates.AVAILABLE && !username && (
-        <JoinForm setUsername={setUsername} />
+        <JoinForm
+          setUsername={setUsername}
+          notificationPermission={notificationPermission}
+        />
       )}
       <ToastContainer />
     </div>

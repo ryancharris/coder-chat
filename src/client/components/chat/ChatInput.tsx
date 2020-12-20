@@ -27,8 +27,6 @@ function ChatInput(props: ChatInputProps) {
       } as MessageArgs)
       .then(res => {
         if (notificationPermission !== 'granted') {
-          // TODO: Add success messaging
-          console.log('Message sent')
           toast.success('Message sent 🚀')
         } else {
           new Notification('Message sent 🚀')
@@ -36,8 +34,6 @@ function ChatInput(props: ChatInputProps) {
       })
       .catch(err => {
         if (notificationPermission !== 'granted') {
-          // TODO: Add failure messaging
-          console.log('Message failed')
           toast.error('Message failed 😢')
         } else {
           new Notification('Message failed 😢')

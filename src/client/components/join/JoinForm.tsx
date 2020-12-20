@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import { toast } from 'react-toastify'
+
+import { NotificationPermisionStatus } from '../App'
 
 type JoinFormProps = {
   setUsername: Function
+  notificationPermission: NotificationPermisionStatus
 }
 
 function usernameIsValid(str: string): boolean {
@@ -14,7 +18,7 @@ function usernameIsValid(str: string): boolean {
 }
 
 function JoinForm(props: JoinFormProps): JSX.Element {
-  const { setUsername } = props
+  const { notificationPermission, setUsername } = props
   const styles = useStyles()
   const [name, setName] = useState<string>('')
   const validUserName = usernameIsValid(name)
@@ -34,10 +38,29 @@ function JoinForm(props: JoinFormProps): JSX.Element {
         <button
           className={styles.joinFormButton}
           type="submit"
-          onClick={() => {
+          onClick={e => {
+            e.preventDefault()
+
             if (validUserName) {
-              // TODO: Fix typing
               setUsername(name)
+
+              if (notificationPermission !== 'granted') {
+                toast.success('Welcome to Coder Chat 🤘', {
+                  autoClose: 3000,
+                })
+              } else {
+                new Notification('Welcome to Coder Chat 🤘')
+              }
+            } else {
+              if (notificationPermission !== 'granted') {
+                toast.error(
+                  'Usernames must be between 3 and 20 alphanumeric characters'
+                )
+              } else {
+                new Notification(
+                  'Usernames must be between 3 and 20 alphanumeric characters'
+                )
+              }
             }
           }}
         >
