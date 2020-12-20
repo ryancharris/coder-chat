@@ -30,7 +30,6 @@ function JoinForm(props: JoinFormProps): JSX.Element {
               // TODO: Fix typing
               setUsername(inputRef.current.value)
             }
-            history.push('/chat')
           }}
         >
           Join
