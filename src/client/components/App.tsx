@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
 import api from '../lib/api'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+} from 'react-router-dom'
 
 import Chat from './chat/Chat'
 import JoinForm from './join/JoinForm'
@@ -13,6 +18,7 @@ import JoinForm from './join/JoinForm'
  * should ultimately be replaced with the final chat app.
  */
 export const App: React.FC = () => {
+  const history = useHistory()
   const styles = useStyles()
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
@@ -38,18 +44,18 @@ export const App: React.FC = () => {
    * } */
 
   return (
-    // <Router>
-    <div className={styles.app}>
-      <Switch>
-        <Route path="/chat">
-          <Chat username={username} />
-        </Route>
-        <Route exact path="/">
-          <JoinForm setUsername={setUsername} />
-        </Route>
-      </Switch>
-    </div>
-    // </Router>
+    <Router history={history}>
+      <div className={styles.app}>
+        <Switch>
+          <Route path="/chat">
+            <JoinForm setUsername={setUsername} />
+          </Route>
+          <Route exact path="/">
+            <Chat username={username} />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
