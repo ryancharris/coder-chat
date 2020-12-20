@@ -42,7 +42,7 @@ export const App: React.FC = () => {
     <div className={styles.app}>
       <Switch>
         <Route path="/chat">
-          <Chat />
+          <Chat username={username} />
         </Route>
         <Route exact path="/">
           <JoinForm setUsername={setUsername} />

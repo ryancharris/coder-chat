@@ -10,7 +10,7 @@ function JoinForm(props: JoinFormProps): JSX.Element {
   const { setUsername } = props
   const styles = useStyles()
   const history = useHistory()
-  const inputRef = useRef<React.Ref<object>>()
+  const inputRef = useRef(null)
 
   return (
     <div className={styles.joinForm}>
@@ -27,10 +27,9 @@ function JoinForm(props: JoinFormProps): JSX.Element {
           className={styles.joinFormButton}
           type="submit"
           onClick={() => {
-            const username = inputRef.current.value
-              ? inputRef.current.value
-              : null
-            setUsername(username)
+            if (inputRef.current) {
+              setUsername(inputRef.current.value)
+            }
             history.push('/chat')
           }}
         >
