@@ -2,16 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
 import api from '../lib/api'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
 import Chat from './chat/Chat'
 import JoinForm from './join/JoinForm'
 
-/**
- * The top-level component in our React application, all of the code currently
- * in here is just an example of our conventions and server interaction, but
- * should ultimately be replaced with the final chat app.
- */
 export const App: React.FC = () => {
   const styles = useStyles()
   const [success, setSuccess] = useState<boolean>(false)
@@ -38,18 +31,10 @@ export const App: React.FC = () => {
    * } */
 
   return (
-    <Router>
-      <div className={styles.app}>
-        <Switch>
-          <Route path="/chat">
-            <Chat username={username} />
-          </Route>
-          <Route exact path="/">
-            <JoinForm setUsername={setUsername} />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <div className={styles.app}>
+      {username && <Chat username={username} />}
+      {!username && <JoinForm setUsername={setUsername} />}
+    </div>
   )
 }
 
@@ -57,7 +42,6 @@ export const App: React.FC = () => {
 // it with conflict-avoidant class names that provide the styles.
 // You can read more about it here: https://cssinjs.org/react-jss
 const useStyles = createUseStyles({
-  // Apply some global style resets
   '@global': {
     '*': {
       boxSizing: 'border-box',
@@ -67,7 +51,6 @@ const useStyles = createUseStyles({
       backgroundColor: '#BCECE0',
     },
   },
-  // App-specific styles
   app: {
     alignItems: 'center',
     display: 'flex',

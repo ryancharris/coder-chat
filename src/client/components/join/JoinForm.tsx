@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import { createUseStyles } from 'react-jss'
-import { useHistory } from 'react-router-dom'
 
 type JoinFormProps = {
   setUsername: Function
@@ -9,7 +8,6 @@ type JoinFormProps = {
 function JoinForm(props: JoinFormProps): JSX.Element {
   const { setUsername } = props
   const styles = useStyles()
-  const history = useHistory()
   const inputRef = useRef(null)
 
   return (
