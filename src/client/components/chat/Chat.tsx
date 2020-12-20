@@ -31,16 +31,14 @@ const useStyles = createUseStyles({
     backgroundColor: 'white',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
     height: '100vh',
     width: '100%',
   },
   chatLogWrapper: {
     backgroundColor: 'yellow',
-    height: '84vh',
+    height: '88%',
   },
   chatInputWrapper: {
     backgroundColor: '#BCECE0',
-    height: '16vh',
   },
 })
