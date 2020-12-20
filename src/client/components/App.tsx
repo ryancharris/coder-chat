@@ -13,12 +13,12 @@ export const App: React.FC = () => {
 
   // Make a test request immediately on component render to the API, and set
   // component state based on the response
-  useEffect(() => {
-    api
-      .test()
-      .then(() => setSuccess(true))
-      .catch(err => setError(err))
-  }, [])
+  // useEffect(() => {
+  //   api
+  //     .test()
+  //     .then(() => setSuccess(true))
+  //     .catch(err => setError(err))
+  // }, [])
 
   // Set content message based on the current state of the App
   /* let content
