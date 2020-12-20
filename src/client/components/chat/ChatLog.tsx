@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import api from '../../lib/api'
+import ChatMessage from './ChatMessage'
 
 function ChatLog() {
   const styles = useStyles()
+  const anchorRef = useRef(null)
   const messagesRef = useRef([])
   const [messages, setMessages] = useState([])
 
@@ -22,6 +24,7 @@ function ChatLog() {
       if (json.type === 'message') {
         messagesRef.current = [...messagesRef.current, json.data]
         setMessages([...messagesRef.current, json])
+        anchorRef.current.scrollIntoView({ behavior: 'smooth' })
       }
     }
 
@@ -39,8 +42,16 @@ function ChatLog() {
     <div className={styles.chatLog}>
       <div className={styles.logWrapper}>
         {messagesRef.current.map((msg, idx) => {
-          return <p key={`${msg.from}-${idx}`}>{msg.body}</p>
+          return (
+            <ChatMessage
+              key={`${idx}-${msg.from}`}
+              body={msg.body}
+              from={msg.from}
+              time={msg.time}
+            />
+          )
         })}
+        <div ref={anchorRef} className={styles.anchor}></div>
       </div>
     </div>
   )
@@ -58,6 +69,10 @@ const useStyles = createUseStyles({
     backgroundColor: 'white',
     borderRadius: '4px',
     height: '100%',
+    overflowY: 'scroll',
     padding: '12px',
+  },
+  anchor: {
+    height: 0,
   },
 })
