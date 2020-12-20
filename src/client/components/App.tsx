@@ -38,18 +38,18 @@ export const App: React.FC = () => {
    * } */
 
   return (
-    // <Router>
-    <div className={styles.app}>
-      <Switch>
-        <Route path="/chat">
-          <Chat username={username} />
-        </Route>
-        <Route exact path="/">
-          <JoinForm setUsername={setUsername} />
-        </Route>
-      </Switch>
-    </div>
-    // </Router>
+    <Router>
+      <div className={styles.app}>
+        <Switch>
+          <Route path="/chat">
+            <Chat username={username} />
+          </Route>
+          <Route exact path="/">
+            <JoinForm setUsername={setUsername} />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
@@ -59,6 +59,9 @@ export const App: React.FC = () => {
 const useStyles = createUseStyles({
   // Apply some global style resets
   '@global': {
+    '*': {
+      boxSizing: 'border-box',
+    },
     body: {
       margin: 0,
       backgroundColor: '#BCECE0',

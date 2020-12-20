@@ -17,6 +17,7 @@ function JoinForm(props: JoinFormProps): JSX.Element {
       <h1 className={styles.joinFormHeader}>Welcome to Coder Chat</h1>
       <form className={styles.joinFormForm}>
         <input
+          autoFocus
           ref={inputRef}
           className={styles.joinFormInput}
           required
@@ -28,6 +29,7 @@ function JoinForm(props: JoinFormProps): JSX.Element {
           type="submit"
           onClick={() => {
             if (inputRef.current) {
+              // TODO: Fix typing
               setUsername(inputRef.current.value)
             }
             history.push('/chat')
@@ -76,6 +78,7 @@ const useStyles = createUseStyles({
     color: 'white',
     cursor: 'pointer',
     fontSize: '1.2rem',
+    fontWeight: 'bold',
     padding: '8px 4px',
   },
 })
