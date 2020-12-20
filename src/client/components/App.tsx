@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
 import api from '../lib/api'
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
+import Chat from './chat/Chat'
 import JoinForm from './join/JoinForm'
 
 /**
@@ -24,20 +27,24 @@ export const App: React.FC = () => {
   }, [])
 
   // Set content message based on the current state of the App
-  let content
-  if (success) {
-    content = <pre>Got a response from the server!</pre>
-  } else if (error) {
-    content = <pre className="error">{error.toString()}</pre>
-  } else {
-    content = <p>Sending test request to API...</p>
-  }
+  /* let content
+   * if (success) {
+   *   content = <pre>Got a response from the server!</pre>
+   * } else if (error) {
+   *   content = <pre className="error">{error.toString()}</pre>
+   * } else {
+   *   content = <p>Sending test request to API...</p>
+   * } */
 
   return (
-    <div className={styles.app}>
-      <JoinForm></JoinForm>
-      {/* {content} */}
-    </div>
+    <Router>
+      <div className={styles.app}>
+        <Switch>
+          <Route path="/chat" component={Chat} />
+          <Route path="/" component={JoinForm} />
+        </Switch>
+      </div>
+    </Router>
   )
 }
 
@@ -49,8 +56,8 @@ const useStyles = createUseStyles({
   '@global': {
     body: {
       margin: 0,
-      backgroundColor: '#BCECE0'
-    }
+      backgroundColor: '#BCECE0',
+    },
   },
   // App-specific styles
   app: {
@@ -59,14 +66,14 @@ const useStyles = createUseStyles({
     height: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
-    fontFamily: 'Helvetica'
+    fontFamily: 'Helvetica',
   },
   title: {
-    marginBottom: 20
+    marginBottom: 20,
   },
   text: {
     '& code': {
-      color: '#8e44ad'
-    }
-  }
+      color: '#8e44ad',
+    },
+  },
 })

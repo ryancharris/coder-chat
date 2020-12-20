@@ -12,8 +12,6 @@ function JoinForm() {
           required
           placeholder="Enter your name"
           type="text"
-          minlength="3"
-          maxlength="20"
         />
         <button className={styles.joinFormButton} type="submit">Join</button>
       </form>
