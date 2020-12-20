@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import api from '../../lib/api'
-import { Message } from '../../../types/message'
+import { Message, MessageArgs } from '../../../types/message'
 
 type ChatInputProps = {
   username: string | null
@@ -20,7 +20,7 @@ function ChatInput(props: ChatInputProps) {
       .postMessage({
         from: username,
         body: message,
-      })
+      } as MessageArgs)
       .then(res => {
         // TODO: Add success messaging
         // console.log('message sent')
