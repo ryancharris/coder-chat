@@ -3,26 +3,13 @@ import { createUseStyles } from 'react-jss'
 import { toast } from 'react-toastify'
 
 import api from '../../lib/api'
-import { Message, MessageArgs } from '../../../types/message'
+import { MessageArgs } from '../../../types/message'
 
 import { NotificationPermisionStatus } from '../App'
 
 type ChatInputProps = {
   username: string | null
   notificationPermission: NotificationPermisionStatus
-}
-
-function createNotification(type: string, message: string): void {
-  switch (type) {
-    case 'success':
-      NotificationManager.success(message, null, 2000)
-      break
-    case 'error':
-      NotificationManager.error(message, null, 2000)
-      break
-    default:
-      break
-  }
 }
 
 function ChatInput(props: ChatInputProps) {
