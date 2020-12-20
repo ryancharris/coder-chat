@@ -65,6 +65,9 @@ export const App: React.FC = () => {
 const useStyles = createUseStyles({
   // Apply some global style resets
   '@global': {
+    '*': {
+      boxSizing: 'border-box',
+    },
     body: {
       margin: 0,
       backgroundColor: '#BCECE0',

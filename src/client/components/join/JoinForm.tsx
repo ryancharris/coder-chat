@@ -78,6 +78,7 @@ const useStyles = createUseStyles({
     color: 'white',
     cursor: 'pointer',
     fontSize: '1.2rem',
+    fontWeight: 'bold',
     padding: '8px 4px',
   },
 })

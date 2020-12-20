@@ -40,7 +40,7 @@ const useStyles = createUseStyles({
     height: '84vh',
   },
   chatInputWrapper: {
-    backgroundColor: 'red',
+    backgroundColor: '#BCECE0',
     height: '16vh',
   },
 })
