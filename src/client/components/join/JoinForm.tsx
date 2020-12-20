@@ -1,19 +1,41 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { createUseStyles } from 'react-jss'
+import { useHistory } from 'react-router-dom'
 
-function JoinForm() {
+type JoinFormProps = {
+  setUsername: Function
+}
+
+function JoinForm(props: JoinFormProps): JSX.Element {
+  const { setUsername } = props
   const styles = useStyles()
+  const history = useHistory()
+  const inputRef = useRef<React.Ref<object>>()
+
   return (
     <div className={styles.joinForm}>
       <h1 className={styles.joinFormHeader}>Welcome to Coder Chat</h1>
       <form className={styles.joinFormForm}>
         <input
+          ref={inputRef}
           className={styles.joinFormInput}
           required
           placeholder="Enter your name"
           type="text"
         />
-        <button className={styles.joinFormButton} type="submit">Join</button>
+        <button
+          className={styles.joinFormButton}
+          type="submit"
+          onClick={() => {
+            const username = inputRef.current.value
+              ? inputRef.current.value
+              : null
+            setUsername(username)
+            history.push('/chat')
+          }}
+        >
+          Join
+        </button>
       </form>
     </div>
   )
@@ -39,14 +61,14 @@ const useStyles = createUseStyles({
   },
   joinFormForm: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   joinFormInput: {
     border: '1px solid black',
     borderRadius: '4px',
     fontSize: '1.5rem',
     marginBottom: '8px',
-    padding: '4px 8px'
+    padding: '4px 8px',
   },
   joinFormButton: {
     backgroundColor: '#F652A0',
@@ -55,6 +77,6 @@ const useStyles = createUseStyles({
     color: 'white',
     cursor: 'pointer',
     fontSize: '1.2rem',
-    padding: '8px 4px'
-  }
+    padding: '8px 4px',
+  },
 })

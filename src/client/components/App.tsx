@@ -16,6 +16,7 @@ export const App: React.FC = () => {
   const styles = useStyles()
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
 
   // Make a test request immediately on component render to the API, and set
   // component state based on the response
@@ -37,14 +38,18 @@ export const App: React.FC = () => {
    * } */
 
   return (
-    <Router>
-      <div className={styles.app}>
-        <Switch>
-          <Route path="/chat" component={Chat} />
-          <Route path="/" component={JoinForm} />
-        </Switch>
-      </div>
-    </Router>
+    // <Router>
+    <div className={styles.app}>
+      <Switch>
+        <Route path="/chat">
+          <Chat />
+        </Route>
+        <Route exact path="/">
+          <JoinForm setUsername={setUsername} />
+        </Route>
+      </Switch>
+    </div>
+    // </Router>
   )
 }
 
