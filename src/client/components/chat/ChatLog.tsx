@@ -2,9 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import api from '../../lib/api'
-import ChatMessage from './ChatMessage'
+import GuestMessage from './GuestMessage'
+import UserMessage from './UserMessage'
 
-function ChatLog() {
+import { Message } from '../../../types/message'
+
+type ChatLogProps = {
+  username: string | null
+}
+
+function ChatLog(props: ChatLogProps) {
+  const { username } = props
   const styles = useStyles()
   const anchorRef = useRef(null)
   const messagesRef = useRef([])
@@ -41,9 +49,16 @@ function ChatLog() {
   return (
     <div className={styles.chatLog}>
       <div className={styles.logWrapper}>
-        {messagesRef.current.map((msg, idx) => {
-          return (
-            <ChatMessage
+        {messagesRef.current.map((msg: Message, idx: number) => {
+          return msg.from === username ? (
+            <UserMessage
+              key={`${idx}-${msg.from}`}
+              body={msg.body}
+              from={msg.from}
+              time={msg.time}
+            />
+          ) : (
+            <GuestMessage
               key={`${idx}-${msg.from}`}
               body={msg.body}
               from={msg.from}
