@@ -1,4 +1,4 @@
-import React, { isValidElement, useRef } from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 type JoinFormProps = {
@@ -6,7 +6,7 @@ type JoinFormProps = {
 }
 
 function usernameIsValid(str: string): boolean {
-  if (str.length < 3 || str.length > 20) {
+  if (str === null || str.length < 3 || str.length > 20) {
     return false
   }
 
@@ -16,7 +16,8 @@ function usernameIsValid(str: string): boolean {
 function JoinForm(props: JoinFormProps): JSX.Element {
   const { setUsername } = props
   const styles = useStyles()
-  const inputRef = useRef(null)
+  const [name, setName] = useState<string>('')
+  const validUserName = usernameIsValid(name)
 
   return (
     <div className={styles.joinForm}>
@@ -24,22 +25,19 @@ function JoinForm(props: JoinFormProps): JSX.Element {
       <form className={styles.joinFormForm}>
         <input
           autoFocus
-          ref={inputRef}
           className={styles.joinFormInput}
           required
           placeholder="Enter your name"
           type="text"
+          onChange={e => setName(e.currentTarget.value)}
         />
         <button
           className={styles.joinFormButton}
           type="submit"
           onClick={() => {
-            const validUsername =
-              inputRef.current && usernameIsValid(inputRef.current.value)
-
-            if (validUsername) {
+            if (validUserName) {
               // TODO: Fix typing
-              setUsername(inputRef.current.value)
+              setUsername(name)
             }
           }}
         >
