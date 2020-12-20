@@ -5,20 +5,26 @@ import api from '../lib/api'
 import Chat from './chat/Chat'
 import JoinForm from './join/JoinForm'
 
+enum ServerStates {
+  AVAILABLE = 'available',
+  UNAVAILABLE = 'unavailable',
+}
+
 export const App: React.FC = () => {
   const styles = useStyles()
-  const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<Error | null>(null)
   const [username, setUsername] = useState<string | null>(null)
+  const [serverState, setServerState] = useState<ServerStates | null>(null)
 
-  // Make a test request immediately on component render to the API, and set
-  // component state based on the response
-  // useEffect(() => {
-  //   api
-  //     .test()
-  //     .then(() => setSuccess(true))
-  //     .catch(err => setError(err))
-  // }, [])
+  useEffect(() => {
+    api
+      .test()
+      .then(() => setServerState(ServerStates.AVAILABLE))
+      .catch(err => {
+        setServerState(ServerStates.UNAVAILABLE)
+        setError(err)
+      })
+  }, [])
 
   // Set content message based on the current state of the App
   /* let content
@@ -32,8 +38,18 @@ export const App: React.FC = () => {
 
   return (
     <div className={styles.app}>
-      {username && <Chat username={username} />}
-      {!username && <JoinForm setUsername={setUsername} />}
+      {serverState === ServerStates.UNAVAILABLE && (
+        <div className={styles.fail}>
+          <h1 className={styles.failHeader}>Server unavailable...</h1>
+          {error && <pre>{error.message}</pre>}
+        </div>
+      )}
+      {serverState === ServerStates.AVAILABLE && username && (
+        <Chat username={username} />
+      )}
+      {serverState === ServerStates.AVAILABLE && !username && (
+        <JoinForm setUsername={setUsername} />
+      )}
     </div>
   )
 }
@@ -68,5 +84,20 @@ const useStyles = createUseStyles({
     '& code': {
       color: '#8e44ad',
     },
+  },
+  fail: {
+    backgroundColor: 'white',
+    border: '1px solid black',
+    borderRadius: '4px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    margin: '12px',
+    minWidth: '320px',
+    padding: '48px',
+    textAlign: 'center',
+  },
+  failHeader: {
+    margin: '0 0 24px 0',
   },
 })

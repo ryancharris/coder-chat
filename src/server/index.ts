@@ -17,7 +17,7 @@ app.use(cors())
 
 app.get('/test', (req, res) => {
   res.json({
-    data: { success: true }
+    data: { success: true },
   })
 })
 
@@ -37,7 +37,7 @@ app.post('/message', (req, res) => {
     // Add the post and send it back to them
     const message = MessagesManager.addMessage(req.body)
     res.json({
-      data: { message }
+      data: { message },
     })
   } catch (err) {
     res.json({ error: err.message })
