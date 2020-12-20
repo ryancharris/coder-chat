@@ -51,14 +51,14 @@ function ChatLog(props: ChatLogProps) {
       <div className={styles.logWrapper}>
         {messagesRef.current.map((msg: Message, idx: number) => {
           return msg.from === username ? (
-            <UserMessage
+            <GuestMessage
               key={`${idx}-${msg.from}`}
               body={msg.body}
               from={msg.from}
               time={msg.time}
             />
           ) : (
-            <GuestMessage
+            <UserMessage
               key={`${idx}-${msg.from}`}
               body={msg.body}
               from={msg.from}

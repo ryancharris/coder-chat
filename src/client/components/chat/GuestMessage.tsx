@@ -38,7 +38,7 @@ const useStyles = createUseStyles({
     flexDirection: 'column',
   },
   messageBody: {
-    background: '#4C5270',
+    background: '#F652A0',
     borderRadius: '4px',
     color: 'white',
     fontSize: '1.2rem',
