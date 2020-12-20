@@ -45,11 +45,11 @@ function JoinForm(props: JoinFormProps): JSX.Element {
               setUsername(name)
 
               if (notificationPermission !== 'granted') {
-                toast.success('Welcome to Coder Chat 🤘', {
+                toast.success(`Logged in as ${name}`, {
                   autoClose: 3000,
                 })
               } else {
-                new Notification('Welcome to Coder Chat 🤘')
+                new Notification(`Logged in as ${name}`)
               }
             } else {
               if (notificationPermission !== 'granted') {
