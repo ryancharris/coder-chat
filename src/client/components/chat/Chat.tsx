@@ -36,9 +36,10 @@ const useStyles = createUseStyles({
   },
   chatLogWrapper: {
     backgroundColor: 'yellow',
-    height: '88%',
+    height: '88vh',
   },
   chatInputWrapper: {
     backgroundColor: '#BCECE0',
+    height: '12vh',
   },
 })

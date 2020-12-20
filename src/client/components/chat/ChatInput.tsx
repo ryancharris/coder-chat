@@ -5,7 +5,10 @@ function ChatInput() {
   const styles = useStyles()
   return (
     <div className={styles.chatInput}>
-      <textarea className={styles.chatInputText}></textarea>
+      <textarea
+        className={styles.chatInputText}
+        placeholder="Enter a message"
+      ></textarea>
       <button className={styles.chatInputButton}>Send</button>
     </div>
   )
@@ -20,12 +23,12 @@ const useStyles = createUseStyles({
     flexDirection: 'row',
     height: '100%',
     width: '100%',
-    padding: '48px 18px',
+    padding: '24px 18px',
   },
   chatInputText: {
     border: '1px solid black',
     borderRadius: '4px',
-    fontSize: '1.5rem',
+    fontSize: '1.25rem',
     height: '100%',
     margin: '0 6px 0 0',
     resize: 'none',
