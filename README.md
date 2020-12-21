@@ -1,6 +1,6 @@
 # Coder Chat
 
-## Instructions
+## Running the application
 
 1. Clone the repo
 
@@ -26,7 +26,7 @@ npm install
 npm run start
 ```
 
-## Technical Requirements
+## System requirements
 
 - Node 10+
 
@@ -40,14 +40,27 @@ node --version
 npm --version
 ```
 
-## Libraries I Added
+## New dependencies
 
-1. [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - This library handles rendering toast notifications for users whose browser doesn't support or denies permissions for the [Notification API](https://developer.mozilla.org/en-US/docs/Web/API/Notification).
-2. [react-hook-form](https://react-hook-form.com/) - Used for client-side form validation in the `JoinForm` and `ChatInput` components.
-3. [prettier](https://prettier.io/) - I used Prettier to format the repository and enforce code style in my editor via 'format on save'.
-4. [css-loader](https://github.com/webpack-contrib/css-loader) / [style-loader](https://github.com/webpack-contrib/style-loader) - These webpack plugins handle loading the CSS for `react-toastify` in `App.tsx`.
+[`react-toastify`](https://fkhadra.github.io/react-toastify/introduction)
 
-## Goals
+This library handles rendering toast notifications for users whose browsers don't support or deny permissions for the [Notification API](https://developer.mozilla.org/en-US/docs/Web/API/Notification). In production, I may opt for building a custom notification system, however, for the purposes of this project it saved me significant amounts of time. I chose this library specifically because it had over 6,000 stars on GitHub and great documentation.
+
+[`react-hook-form`](https://react-hook-form.com/)
+
+To save time, I opted to use this library for handling client-side form validation and error messaging in `JoinForm` and `ChatInput`. I chose this specific library due to its simple API, but could easily swap it out for a similar option like [Formik](https://github.com/formium/formik).
+
+[`prettier`](https://prettier.io/)
+
+In order to consistently format the code in the repository and enforce coding conventions in my editor, I installed Prettier. This is the most commonly used code formatter in the JS/TS ecosystem, which is why I chose it.
+
+[`css-loader`](https://github.com/webpack-contrib/css-loader) / [`style-loader`](https://github.com/webpack-contrib/style-loader)
+
+I had to add these webpack plugins in order to load the CSS for 'react-notify' in 'App.tsx'.
+
+## Progress
+
+### Standard goals
 
 - [x] Write clear, concise code
 - [x] Implement wireframes
@@ -55,17 +68,24 @@ npm --version
 - [x] Handle server errors, API call failures
 - [x] Client-side validation for usernames and messages
 
-## Stretch Goals
+### Stretch goals
 
 - [x] HTML5 notifications
 - [x] Go all out on styling
 - [x] Custom feature: notifications for non-HTML5 users
+- [ ] Persist username between sessions by storing it in localStorage
+- [ ] Rate limiting user input in ChatInput to prevent spamming
 
 ## Improvements I'd make with more time
 
-- [ ] Persist username between sessions by storing it in localStorage
-- [ ] Rate limiting user input in ChatInput to prevent spamming
-- [ ] Add ESLint
-- [ ] Lint and run Prettier on each commit using git hooks
-- [ ] Add CI pipeline
+### Refactor
+
+- [ ] Generalize `UserMessage` and `GuestMessage` components into a singular `ChatMessage` component
+- [ ] Abstract notification functionality and permission checking into its own hook
+
+### Code consistency
+
 - [ ] Add unit tests
+- [ ] Add ESLint
+- [ ] Run unit tests and code linting in CI pipeline
+- [ ] Lint and prettify each commit locally using git hooks
