@@ -11,7 +11,9 @@ type ChatProps = {
   notificationPermission: NotificationPermisionStatus
 }
 
-function Chat(props: ChatProps) {
+export default function Chat(
+  props: ChatProps
+): React.FunctionComponentElement<HTMLDivElement> {
   const { notificationPermission, username } = props
   const styles = useStyles()
 
@@ -32,8 +34,6 @@ function Chat(props: ChatProps) {
     </div>
   )
 }
-
-export default Chat
 
 const useStyles = createUseStyles({
   chat: {

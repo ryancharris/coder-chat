@@ -18,16 +18,17 @@ function usernameIsValid(str: string): boolean {
   return true
 }
 
-function JoinForm(props: JoinFormProps): JSX.Element {
+export default function JoinForm(
+  props: JoinFormProps
+): React.FunctionComponentElement<HTMLDivElement> {
   const { notificationPermission, setUsername } = props
   const styles = useStyles()
 
   const { register, handleSubmit, watch, errors } = useForm()
-  const name = watch('username', '')
-  const validUserName = usernameIsValid(name)
-  console.log('errors', errors)
+  const name: string = watch('username', '')
+  const validUserName: boolean = usernameIsValid(name)
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     if (validUserName) {
       setUsername(name)
 
@@ -85,8 +86,6 @@ function JoinForm(props: JoinFormProps): JSX.Element {
     </div>
   )
 }
-
-export default JoinForm
 
 const useStyles = createUseStyles({
   joinForm: {

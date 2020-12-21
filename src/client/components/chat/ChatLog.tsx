@@ -14,22 +14,19 @@ type ChatLogProps = {
   notificationPermission: NotificationPermisionStatus
 }
 
-function ChatLog(props: ChatLogProps) {
+export default function ChatLog(
+  props: ChatLogProps
+): React.FunctionComponentElement<HTMLDivElement> {
   const { username, notificationPermission } = props
   const styles = useStyles()
-  const anchorRef = useRef(null)
-  const messagesRef = useRef([])
-  const [messages, setMessages] = useState([])
+  const anchorRef = useRef<HTMLDivElement | null>(null)
+  const messagesRef = useRef<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
 
   useEffect(() => {
-    const socket = api.openMessageSocket()
+    const socket: WebSocket = api.openMessageSocket()
 
-    function handleSocketError(event) {
-      // TODO: Handle socket error
-      console.log('error', event)
-    }
-
-    function handleSocketMessage(event) {
+    function handleSocketMessage(event: MessageEvent) {
       const json = JSON.parse(event.data)
 
       if (json.type === 'message') {
@@ -39,7 +36,7 @@ function ChatLog(props: ChatLogProps) {
         setMessages([...messagesRef.current, json])
 
         // Scroll to bottom of chat log
-        anchorRef.current.scrollIntoView({ behavior: 'smooth' })
+        anchorRef.current!.scrollIntoView({ behavior: 'smooth' })
 
         // Send notification we've received a message not from user
         if (json.data.from !== username) {
@@ -52,11 +49,9 @@ function ChatLog(props: ChatLogProps) {
       }
     }
 
-    socket.addEventListener('error', handleSocketError)
     socket.addEventListener('message', handleSocketMessage)
 
     return () => {
-      socket.removeEventListener('error', handleSocketError)
       socket.removeEventListener('message', handleSocketMessage)
       socket.close()
     }
@@ -87,8 +82,6 @@ function ChatLog(props: ChatLogProps) {
     </div>
   )
 }
-
-export default ChatLog
 
 const useStyles = createUseStyles({
   chatLog: {

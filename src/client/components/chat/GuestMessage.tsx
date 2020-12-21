@@ -7,7 +7,9 @@ type GuestMessageProps = {
   time: number
 }
 
-export default function GuestMessage(props: GuestMessageProps) {
+export default function GuestMessage(
+  props: GuestMessageProps
+): React.FunctionComponentElement<HTMLDivElement> {
   const styles = useStyles()
   const { body, from, time } = props
 
