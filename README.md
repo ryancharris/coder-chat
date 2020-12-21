@@ -83,6 +83,7 @@ I had to add these webpack plugins in order to load the CSS for `react-notify` i
 - [ ] Generalize `UserMessage` and `GuestMessage` components into a singular `ChatMessage` component
 - [ ] Abstract notification functionality and permission checking into its own hook
 - [ ] Add proper user authentication
+- [ ] Add error handling for WebSocket errors
 
 ### Code consistency
 
