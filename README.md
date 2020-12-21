@@ -1,92 +1,67 @@
-# Coder Take-Home Challenge
+# Coder Chat
 
-Hey there, congrats on your interview so far! To assess candidates in a fair
-way that best aligns with their regular development, we give a take home
-challenge to let you strut your stuff in the comfort of your own development
-environment, without someone looking over your shoulder.
+## Instructions
 
-This challenge should take about **2-3 hours**, so if you're finding yourself
-stuck on something, please reach out rather than waste a ton of your time!
+1. Clone the repo
 
-## Requirements
+```bash
+git clone git@github.com:ryancharris/coder-chat.git
+```
 
-- Node 10+ (check with `node --version`)
-- NPM 6+ (check with `npm --version`)
+2. Change directories
 
-## Project Overview
+```bash
+cd coder-chat/
+```
 
-What we have here is the skeleton of a basic chat application. In `src/server`,
-we have an Express server that provides both a REST interface for sending
-messages, and a Websocket interface for receiving new messages in real time.
-You shouldn't need to edit anything in here, but reading the code may help
-you understand the app better.
+3. Install Node modules
 
-For the frontend, we have a React app in `src/client`. The project has
-been setup for you using a few libraries and conventions that are core to our
-stack, but the chat app hasn't been fully implemented yet. Using the API
-provided for you in `src/client/lib/api`, you will need to create some
-components that have a user specify a username, and then enter the chat.
+```bash
+npm install
+```
 
-### What We're Using on the Frontend
+4. Run the webpack-dev-server and Express
 
-In order to assess how developers would handle being dropped into our stack, we've
-setup this take-home using a few libraries and conventions that we use. **You're not
-expected to be completely familiar with all of them**, but this should give you an idea
-of how we write code, and assess your ability to adapt and conform to new stacks.
+```bash
+npm run start
+```
 
-- [TypeScript](https://www.typescriptlang.org/) - TypeScript requires you to
-  write your javascript a little differently by typing your variables and
-  functions. All JavaScript at Coder is compiled via TypeScript.
-- [React Hooks](https://reactjs.org/docs/hooks-intro.html) - We prefer functional
-  components with hooks, resorting only to class components for very specific scenarios.
-- [JSS Styling](https://cssinjs.org/) - We have switched from Sass styling to
-  using JSS, which is somewhat similar to other CSS-in-JS solutions, but shares
-  a lot more in its structure with Sass.
+## Technical Requirements
 
-Please try to use the project as configured, and don't worry too much about
-minor mistakes due to unfamiliarity being held against you.
+- Node 10+
 
-## Getting Started
+```
+node --version
+```
 
-**You'll want to get started in `App.tsx`**, remove the sample code, and create
-new smaller components from there.
+- NPM 6+
 
-[Click here to see the wireframes!](wires.pdf)
+```
+npm --version
+```
 
-## Running the project
+## Libraries I Added
 
-- `npm install` to get all of the dependencies
-- `npm start` to run the API and webpack servers
+1. [react-toastify](https://fkhadra.github.io/react-toastify/introduction) - This library handles rendering toast notifications for users whose browser doesn't support or denies permissions for the [Notification API](https://developer.mozilla.org/en-US/docs/Web/API/Notification).
+2. [react-hook-form](https://react-hook-form.com/) - Used for client-side form validation in the `JoinForm` and `ChatInput` components.
+3. [prettier](https://prettier.io/) - I used Prettier to format the repository and enforce code style in my editor via 'format on save'.
+4. [css-loader](https://github.com/webpack-contrib/css-loader) / [style-loader](https://github.com/webpack-contrib/style-loader) - These webpack plugins handle loading the CSS for `react-toastify` in `App.tsx`.
 
-A webpage should open up for you automatically. Hot module replacement is configured, so just save your code and changes should show up!
+## Goals
 
-## Core Goals
-
-- [ ] Write clear and concise code that succesfully compiles without errors (compile time or run time)
-- [ ] Implement the wireframes at a minimum as shown
-  - You can change things to improve user experience and interface as you see fit, as long as the app functions as expected
-- [ ] Add some basic styling to the application to make it usable
-- [ ] Handle any server communication errors that could come from regular user interaction, ideally informing the user of the errors
-  - e.g. going offline, messages failing to send
-- [ ] Work within the existing codebase to meet the requirements
-  - Minor alterations to the existing structure are OK, but you should not be re-writing the whole app or server from the ground up
-- [ ] Implements client-side validation:
-  - Messages must be between 1 and 200 characters
-  - Usernames must be alphanumeric and between 3 and 20 characters
-  - The user should be informed when their input is invalid
+- [x] Write clear, concise code
+- [x] Implement wireframes
+- [x] Add basic styles
+- [x] Handle server errors, API call failures
+- [x] Client-side validation for usernames and messages
 
 ## Stretch Goals
 
-If you finish with some time to spare and want to add a little flair, you could implement the following:
+- [x] HTML5 notifications
+- [x] Go all out on styling
+- [x] Custom feature: notifications for non-HTML5 users
 
-- Make the username persist between sessions
-- Add HTML5 notifications
-- Implement rate limiting to prevent spamming the chat
-- Go all out on the styling (animations are a plus!)
-- Add a custom feature of your own choosing (Be sure to describe it to us!)
+## Improvements I'd make with more time
 
-## Tips
-
-- If you have any questions, don't hesitate to reach out. Asking questions is a good thing!
-- This app will only be looked at in development, don't worry about trying to host it on a server, compiling it for production etc.
-- If there's a library you'd like to use, don't hesitate to add it. But please explain why you added any libraries, the value they add, and why you chose that particular library.
+- [ ] Persist username between sessions by storing it in localStorage
+- [ ] Rate limiting user input in ChatInput to prevent spamming
