@@ -1,18 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import { toast } from 'react-toastify'
 
 import api from '../../lib/api'
 import GuestMessage from './GuestMessage'
 import UserMessage from './UserMessage'
 
 import { Message } from '../../../types/message'
+import { NotificationPermisionStatus } from '../App'
 
 type ChatLogProps = {
   username: string | null
+  notificationPermission: NotificationPermisionStatus
 }
 
 function ChatLog(props: ChatLogProps) {
-  const { username } = props
+  const { username, notificationPermission } = props
   const styles = useStyles()
   const anchorRef = useRef(null)
   const messagesRef = useRef([])
@@ -30,9 +33,22 @@ function ChatLog(props: ChatLogProps) {
       const json = JSON.parse(event.data)
 
       if (json.type === 'message') {
+        // Persist the list of messages in state and a ref so
+        // we don't lose the accumultated messages on re-render.
         messagesRef.current = [...messagesRef.current, json.data]
         setMessages([...messagesRef.current, json])
+
+        // Scroll to bottom of chat log
         anchorRef.current.scrollIntoView({ behavior: 'smooth' })
+
+        // Send notification we've received a message not from user
+        if (json.data.from !== username) {
+          if (notificationPermission !== 'granted') {
+            toast(`${json.data.from}: ${json.data.body}`)
+          } else {
+            new Notification(json.data.from, { body: json.data.body })
+          }
+        }
       }
     }
 
