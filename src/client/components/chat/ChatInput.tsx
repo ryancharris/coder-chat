@@ -13,14 +13,16 @@ type ChatInputProps = {
   notificationPermission: NotificationPermisionStatus
 }
 
-function ChatInput(props: ChatInputProps) {
+export default function ChatInput(
+  props: ChatInputProps
+): React.FunctionComponentElement<HTMLDivElement> {
   const { notificationPermission, username } = props
   const styles = useStyles()
   const { register, handleSubmit, watch, errors, setValue } = useForm()
 
-  const message = watch('message', '')
+  const message: string = watch('message', '')
 
-  const onSubmit = () => {
+  const onSubmit = (): void => {
     setValue('message', '')
 
     api
@@ -76,8 +78,6 @@ function ChatInput(props: ChatInputProps) {
     </div>
   )
 }
-
-export default ChatInput
 
 const useStyles = createUseStyles({
   chatInput: {
