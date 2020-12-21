@@ -56,7 +56,7 @@ In order to consistently format the code in the repository and enforce coding co
 
 [`css-loader`](https://github.com/webpack-contrib/css-loader) / [`style-loader`](https://github.com/webpack-contrib/style-loader)
 
-I had to add these webpack plugins in order to load the CSS for 'react-notify' in 'App.tsx'.
+I had to add these webpack plugins in order to load the CSS for `react-notify` in `App.tsx`.
 
 ## Progress
 
