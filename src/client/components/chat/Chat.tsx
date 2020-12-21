@@ -18,7 +18,10 @@ function Chat(props: ChatProps) {
   return (
     <div className={styles.chat}>
       <div className={styles.chatLogWrapper}>
-        <ChatLog username={username} />
+        <ChatLog
+          username={username}
+          notificationPermission={notificationPermission}
+        />
       </div>
       <div className={styles.chatInputWrapper}>
         <ChatInput

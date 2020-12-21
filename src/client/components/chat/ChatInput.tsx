@@ -101,7 +101,7 @@ const useStyles = createUseStyles({
     fontSize: '1.25rem',
     height: '100%',
     margin: '0 6px 0 0',
-    resize: 'none',
+    padding: '4px 8px',
   },
   chatInputButton: {
     backgroundColor: '#F652A0',
