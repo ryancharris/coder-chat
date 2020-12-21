@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { toast } from 'react-toastify'
+import { useForm } from 'react-hook-form'
 
 import api from '../../lib/api'
 import { MessageArgs } from '../../../types/message'
@@ -15,10 +16,12 @@ type ChatInputProps = {
 function ChatInput(props: ChatInputProps) {
   const { notificationPermission, username } = props
   const styles = useStyles()
-  const [message, setMessage] = useState('')
+  const { register, handleSubmit, watch, errors, setValue } = useForm()
 
-  const sendMessage = () => {
-    setMessage('')
+  const message = watch('message', '')
+
+  const onSubmit = () => {
+    setValue('message', '')
 
     api
       .postMessage({
@@ -43,15 +46,33 @@ function ChatInput(props: ChatInputProps) {
 
   return (
     <div className={styles.chatInput}>
-      <textarea
-        value={message}
-        className={styles.chatInputText}
-        placeholder="Enter a message"
-        onChange={e => setMessage(e.currentTarget.value)}
-      ></textarea>
-      <button className={styles.chatInputButton} onClick={sendMessage}>
-        Send
-      </button>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.chatInputForm}>
+        <div className={styles.inputWrapper}>
+          <input
+            autoFocus
+            name="message"
+            ref={register({
+              minLength: 1,
+              maxLength: 200,
+              required: true,
+            })}
+            className={styles.chatInputText}
+            placeholder="Enter a message"
+            type="text"
+          />
+          {!errors.message && (
+            <p className={styles.charCounter}>{message.length}/200</p>
+          )}
+          {errors.message && errors.message.type === 'maxLength' && (
+            <span className={styles.chatInputValidationError}>
+              Messages are limited to 200 characters
+            </span>
+          )}
+        </div>
+        <button className={styles.chatInputButton} type="submit">
+          Send
+        </button>
+      </form>
     </div>
   )
 }
@@ -60,12 +81,19 @@ export default ChatInput
 
 const useStyles = createUseStyles({
   chatInput: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row',
     height: '100%',
     width: '100%',
     padding: '24px 18px',
+  },
+  chatInputForm: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  inputWrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '1px',
+    width: '100%',
   },
   chatInputText: {
     border: '1px solid black',
@@ -74,7 +102,6 @@ const useStyles = createUseStyles({
     height: '100%',
     margin: '0 6px 0 0',
     resize: 'none',
-    width: '100%',
   },
   chatInputButton: {
     backgroundColor: '#F652A0',
@@ -87,5 +114,15 @@ const useStyles = createUseStyles({
     margin: '0 0 0 6px',
     padding: '8px 4px',
     width: '144px',
+  },
+  chatInputValidationError: {
+    color: 'red',
+    fontSize: '0.75rem',
+    margin: '8px 0 0 0',
+    textAlign: 'left',
+  },
+  charCounter: {
+    fontSize: '0.75rem',
+    marginTop: '8px',
   },
 })

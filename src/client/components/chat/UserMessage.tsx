@@ -44,6 +44,8 @@ const useStyles = createUseStyles({
     fontSize: '1.2rem',
     marginBottom: '8px',
     padding: '8px 12px',
+    maxWidth: '100%',
+    wordWrap: 'break-word',
   },
   messageTimestamp: {
     color: '#4C5270',

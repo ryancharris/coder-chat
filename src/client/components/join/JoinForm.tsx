@@ -38,16 +38,6 @@ function JoinForm(props: JoinFormProps): JSX.Element {
       } else {
         new Notification(`Logged in as ${name}`)
       }
-    } else {
-      if (notificationPermission !== 'granted') {
-        toast.error(
-          'Usernames must be between 3 and 20 alphanumeric characters'
-        )
-      } else {
-        new Notification(
-          'Usernames must be between 3 and 20 alphanumeric characters'
-        )
-      }
     }
   }
 
