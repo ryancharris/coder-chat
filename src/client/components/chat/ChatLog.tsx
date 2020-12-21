@@ -20,8 +20,8 @@ export default function ChatLog(
   const { username, notificationPermission } = props
   const styles = useStyles()
   const anchorRef = useRef<HTMLDivElement | null>(null)
-  const messagesRef = useRef<Message[] | []>([])
-  const [messages, setMessages] = useState<Message[] | []>([])
+  const messagesRef = useRef<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([])
 
   useEffect(() => {
     const socket: WebSocket = api.openMessageSocket()
