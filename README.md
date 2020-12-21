@@ -65,3 +65,7 @@ npm --version
 
 - [ ] Persist username between sessions by storing it in localStorage
 - [ ] Rate limiting user input in ChatInput to prevent spamming
+- [ ] Add ESLint
+- [ ] Lint and run Prettier on each commit using git hooks
+- [ ] Add CI pipeline
+- [ ] Add unit tests
